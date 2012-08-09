@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block container_class %}-fluid{% endblock %}
+{% block content %}
+<div class="row-fluid">
+  <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">Admin</li>
+        {%for app_name, app in apps.items() %}
+        <li><a href="/admin/{{app_name}}/">{{app.verbose_name}}</a></li>
+        {%endfor%}
+        <!--li><a href="/users/"><i class="icon-user"></i>Users</a></li-->
+        {% block side_links %}{% endblock %} 
+      </ul>
+    </div><!--/.well -->
+  </div><!--/span-->
+  <div class="span9">
+    {{ macros.alert('Loading…', 'warning') }}
+    {{ macros.alert('Saved', 'success') }}
+    {{ macros.alert('Error While Saving !!!', 'error') }}
+    
+    {% block right_content %}{% endblock %}
+  </div><!--/span-->
+</div>
+{% endblock %}

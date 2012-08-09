@@ -1,0 +1,43 @@
+{% if popout %}
+{% extends "popout.html" %}
+{% else %}
+{% extends "main.html" %}
+{% endif %}
+
+{% block right_content %}
+
+<div class="row-fluid" id="content_list">  
+  <h2>{{model_name}}</h2>
+</div>
+
+<div class="row-fluid" id="content_edit">  
+  <h2>New {{model_name}}</h2>
+</div>
+
+
+
+{% endblock %}
+
+{% block foot_script %}
+  
+  /*
+  var list_request = new RozEngine.Request.List('{{app_name}}', '{{model_name}}');
+  list_request.run(function(html){
+    document.getElementById('content_list').innerHTML += html;
+  });
+  */
+  
+  RozEngine.Widgets.List('{{app_name}}', '{{model_name}}', document.getElementById('content_list'),{
+    {%if fields %}'fields': [{%for f in fields%}'{{f}}',{%endfor%}],{%endif%}
+  });
+  
+  /*
+  var edit_request = new RozEngine.Request.New('{{app_name}}', '{{model_name}}',{
+    'fields': ['name', 'user'],
+  });
+  edit_request.run(function(html){
+    document.getElementById('content_edit').innerHTML += html;
+  });
+  */
+  
+{% endblock %}

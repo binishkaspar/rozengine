@@ -1,0 +1,28 @@
+{% if popout %}
+{% extends "popout.html" %}
+{% else %}
+{% extends "main.html" %}
+{% endif %}
+
+{% block right_content %}
+
+<div class="row-fluid" id="content_edit">  
+  <h2>{{model_name}}</h2>
+</div>
+
+
+
+{% endblock %}
+
+{% block foot_script %}
+  
+  var edit_request = new RozEngine.Request.{%if is_edit %}Edit{% else %}New{% endif %}('{{app_name}}', '{{model_name}}', {
+    {%if fields %}'fields': {{fields|jsonfy|safe}}, {%endif%}
+    {%if action_urls %}'action_urls': {{action_urls|jsonfy|safe}},{%endif%}
+    {%if is_edit %}'key_or_id':{{key_or_id}},{% endif %}
+  });
+  edit_request.run(function(html){
+    document.getElementById('content_edit').innerHTML += html;
+  });
+  
+{% endblock %}

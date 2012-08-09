@@ -1,0 +1,29 @@
+{% if popout %}
+{% extends "popout.html" %}
+{% else %}
+{% extends "main.html" %}
+{% endif %}
+
+{% block right_content %}
+
+{% for model_name, model in models.items() %}
+<div class="row-fluid" id="content_list_{{model_name}}">  
+  <h2><a href="/admin/{{app_name}}/{{model_name}}/">{{model.verbose_name}}</a>  <a class="btn btn-success btn-mini" data-toggle="modal" href="/admin/{{app_name}}/{{model_name}}/new/" ><i class="icon-plus icon-white" ></i> New {{model.verbose_name}}</a></h2>
+</div>
+{% else %}
+  {{ macros.alert('No models found for this app !!!', 'error', '', False, False) }}
+{% endfor %}
+
+{% endblock %}
+
+{% block foot_script %}
+
+{% for model_name, model in models.items() %}
+  var list_request_{{model_name}} = new RozEngine.Request.List('{{app_name}}', '{{model_name}}');
+  list_request_{{model_name}}.run(function(html){
+    document.getElementById('content_list_{{model_name}}').innerHTML += html;
+  });
+{% endfor %}
+
+  
+{% endblock %}

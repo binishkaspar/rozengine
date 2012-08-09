@@ -1,0 +1,20 @@
+{% if popout %}
+{% extends "popout.html" %}
+{% else %}
+{% extends "main.html" %}
+{% endif %}
+
+{% block right_content %}
+
+{% for app_name, app in apps.items() %}
+<div class="row-fluid" id="content_list_{{model_name}}">  
+  <h2><a href="/admin/{{app_name}}/">{{app.verbose_name}}</a> </h2>
+</div>
+{% else %}
+  {{ macros.alert('No apps registered !!!', 'error', '', False, False) }}
+{% endfor %}
+
+{% endblock %}
+
+{% block foot_script %}  
+{% endblock %}
